@@ -21,6 +21,12 @@ clean:
 	rm -fv ./$(ukol1a)
 	rm -fv ./$(ukol1b)
 	rm -fv ./$(ukol1c)
+
+test:
+	./information < tests/test-information-basic.in | diff -u tests/test-information-basic.out -
+	./fusion < tests/test-fusion-basic.in | diff -u tests/test-fusion-basic.out
+	./chemistry < tests/test-chemistry-basic.in | diff -u tests/test-chemistry-basic.out
+
 # zabalenie ulohy do archivu zip
 zip:
 	zip $(login) -r ./lib/ ./src/ ./report.pdf ./Makefile
