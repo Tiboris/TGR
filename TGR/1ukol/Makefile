@@ -21,6 +21,7 @@ clean:
 	rm -fv ./$(ukol1a)
 	rm -fv ./$(ukol1b)
 	rm -fv ./$(ukol1c)
+	rm -fv ./$(login).zip
 
 test:
 	./information < tests/test-information-basic.in | diff -u tests/test-information-basic.out -
