@@ -4,8 +4,8 @@ class Node:
         self.nodeid = nodeid
         self.connections = []
 
-    def has_connection_with(self, node_name):
-        return node_name in self.connections
+    def has_connection_with(self, node_id):
+        return node_id in self.connections
 
     def connect(self, node_name):
         if not self.has_connection_with(node_name):
@@ -14,8 +14,14 @@ class Node:
     def conn_cnt(self):
         return len(self.connections)
 
-    def connections(self):
+    def neighbours(self):
         return self.connections
+
+    def disconnect(self, node_id):
+        try:
+            self.connections.remove(node_id)
+        except ValueError:
+            pass
 
 
 class Person(Node):
@@ -25,7 +31,8 @@ class Person(Node):
 
 
 class Town(Person):
-    pass
+    def direction(self):
+        return self.connections[0]
 
 
 class Component(Node):  # DFS
