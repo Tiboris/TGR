@@ -1,6 +1,6 @@
 #!/usr/python3
 def nodes(data, nodes):
-    for node in data[0].split(', '):
+    for node in data[0].split(','):
         nodes.append(node.split()[0])
 
     del data[0]
@@ -14,3 +14,16 @@ def connections(data, nodes, delimiter):
             nodes[a].connect(b)
             if ">" not in delimiter:
                 nodes[b].connect(a)
+
+
+def compound_elements(graph):
+    elements = []
+    for connection in graph:
+        a, b = connection.split('-')
+        if a not in elements:
+            elements.append(a)
+
+        if b not in elements:
+            elements.append(b)
+
+    return elements

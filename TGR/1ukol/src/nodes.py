@@ -11,6 +11,12 @@ class Node:
         if not self.has_connection_with(node_name):
             self.connections.append(node_name)
 
+    def conn_cnt(self):
+        return len(self.connections)
+
+    def connections(self):
+        return self.connections
+
 
 class Person(Node):
     def __init__(self, name):
@@ -22,13 +28,14 @@ class Town(Person):
     pass
 
 
-class Component(Node):
+class Component(Node):  # DFS
     # H = 1  # Vodík s jednou vazbou
     # O = 2  # Kyslík se dvěma vazbami
     # B = 3  # Bor se třemi
     # C = 4  # Uhlík se čtyřmi
     # N = 5  # Dusík s pěti
     # S = 6  # Síra se šesti
+
     def __init__(self, kind):
         self.kind = self.nodeid = kind
         self.connections = []
