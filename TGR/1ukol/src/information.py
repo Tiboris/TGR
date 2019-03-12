@@ -100,6 +100,7 @@ def subtask2(people):
 
 def run(data):
     people = get_people_data(data)
+    print("Task 1:")
     subtask1(people)
-    print("")
+    print("\nTask 2:")
     subtask2(people)
