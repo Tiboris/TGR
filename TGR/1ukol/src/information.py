@@ -3,7 +3,10 @@ from nodes import Person
 from collections import OrderedDict
 import parse
 
-NAME = 0
+
+def print_dict(dictionary):
+    for key in dictionary:
+        print(str(key) + ": " + str(dictionary[key]))
 
 
 def get_people_data(data):
@@ -54,11 +57,6 @@ def subtask1(people):
         print(person + " (%s)" % people[person].conn_cnt())
 
 
-def get_influencer(influencers, connections):
-
-    return True
-
-
 def format_out(chart):
     output = ""
     for position in chart:
@@ -75,44 +73,33 @@ def format_out(chart):
     return output
 
 
-def subtask2(people):
-    best = []
-    influencers_cnt = 3
-    todo = [person for person in people]
+def get_influencers(influencers, best, influencers_cnt=3, cost=0):
+    if influencers_cnt == 0:
+        return cost
 
+    print_dict(influencers)
+    print_dict(best)
+
+    for person in influencers:
+        value = best[influencers[person].conn_cnt()]
+        best[influencers[person].conn_cnt()] = add_list_item(value, person)
+
+
+def subtask2(people):
     influencers = sort_by_degree(people)
     chart = invert_dict(influencers)
+    best = OrderedDict()
+    for index in range(max(chart, key=int), -1, -1):
+        best[index] = []
 
-    best = {
-        people[chart[max(chart, key=int)][NAME]].conn_cnt():
-            chart[max(chart, key=int)][NAME]
-        }
+    print_dict(best)
 
-    print(todo)
-    print(best)
-    print(influencers.keys())
-    print(format_out(best))
-    print("MAGIC==============================")
-
-    try:
-        todo.remove(best[max(best, key=int)])
-        influencer = influencers.pop(best[max(best, key=int)])
-        for sheep in influencer.connections:
-            todo.remove(sheep)
-        influencers_cnt = influencers_cnt - 1
-    except ValueError:
-        if len(todo) == 0:
-            return
-
-    best[1] = "Adam"
-
-    print(todo)
-    print(best)
-    print(influencers.keys())
+    get_influencers(influencers, best)
     print(format_out(best))
 
 
 def run(data):
     people = get_people_data(data)
     subtask1(people)
+    print("")
     subtask2(people)
