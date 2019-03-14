@@ -27,3 +27,8 @@ def compound_elements(graph):
             elements.append(b)
 
     return elements
+
+
+def print_dict(dictionary):
+    for key in dictionary:
+        print(str(key) + ": " + str(dictionary[key].connections))

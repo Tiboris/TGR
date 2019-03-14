@@ -4,11 +4,6 @@ from collections import OrderedDict
 import parse
 
 
-def print_dict(dictionary):
-    for key in dictionary:
-        print(str(key) + ": " + str(dictionary[key]))
-
-
 def get_people_data(data):
     nodes = []
     people = {}
@@ -77,8 +72,8 @@ def get_influencers(influencers, best, influencers_cnt=3, cost=0):
     if influencers_cnt == 0:
         return cost
 
-    print_dict(influencers)
-    print_dict(best)
+    parse.print_dict(influencers)
+    parse.print_dict(best)
 
     for person in influencers:
         value = best[influencers[person].conn_cnt()]
@@ -92,7 +87,7 @@ def subtask2(people):
     for index in range(max(chart, key=int), -1, -1):
         best[index] = []
 
-    print_dict(best)
+    parse.print_dict(best)
 
     get_influencers(influencers, best)
     print(format_out(best))
