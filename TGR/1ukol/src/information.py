@@ -55,6 +55,8 @@ def subtask1(people):
 def format_out(chart):
     output = ""
     for position in chart:
+        if position == 0:
+            continue
         line = ""
         for name in chart[position]:
             if line:
@@ -73,7 +75,7 @@ def get_influencers(influencers, best, influencers_cnt=3, cost=0):
         return cost
 
     parse.print_dict(influencers)
-    parse.print_dict(best)
+    print(best)
 
     for person in influencers:
         value = best[influencers[person].conn_cnt()]
@@ -87,7 +89,7 @@ def subtask2(people):
     for index in range(max(chart, key=int), -1, -1):
         best[index] = []
 
-    parse.print_dict(best)
+    print(best)
 
     get_influencers(influencers, best)
     print(format_out(best))
