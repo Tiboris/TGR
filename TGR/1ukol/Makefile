@@ -23,6 +23,11 @@ clean:
 	rm -fv ./$(ukol1c)
 	rm -fv ./$(login).zip
 
+run:
+	./information < tests/test-information-basic.in
+	./fusion < tests/test-fusion-basic.in
+	./chemistry < tests/test-chemistry-basic.in
+
 test:
 	./information < tests/test-information-basic.in | diff -u tests/test-information-basic.out -
 	./fusion < tests/test-fusion-basic.in | diff -u tests/test-fusion-basic.out
