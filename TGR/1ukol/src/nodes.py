@@ -47,7 +47,6 @@ class Component(Node):  # DFS
         self.kind = self.nodeid = kind
         self.connections = []
 
-    def connect(self, node_name):
-        self.kind[0]
-        if not self.has_connection_with(node_name):
-            self.connections.append(node_name)
+    def connect(self, component):
+        # Note missing check if connection exists
+        self.connections.append(component)

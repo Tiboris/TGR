@@ -27,5 +27,5 @@ def get_compounds(data):
 def run(data):
     compound1, compound2 = get_compounds(data)
 
-    print(dict(compound1))
-    print(dict(compound2))
+    parse.print_dict(compound1)
+    parse.print_dict(compound2)
