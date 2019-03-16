@@ -8,8 +8,7 @@ class Node:
         return node_id in self.connections
 
     def connect(self, node_name):
-        if not self.has_connection_with(node_name):
-            self.connections.append(node_name)
+        self.connections.append(node_name)
 
     def conn_cnt(self):
         return len(self.connections)
@@ -29,6 +28,10 @@ class Person(Node):
         self.name = self.nodeid = name
         self.connections = []
 
+    def connect(self, node_name):
+        if not self.has_connection_with(node_name):
+            self.connections.append(node_name)
+
 
 class Town(Person):
     def direction(self):
@@ -46,7 +49,3 @@ class Component(Node):  # DFS
     def __init__(self, kind):
         self.kind = self.nodeid = kind
         self.connections = []
-
-    def connect(self, component):
-        # Note missing check if connection exists
-        self.connections.append(component)
