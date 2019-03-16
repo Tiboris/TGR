@@ -29,6 +29,8 @@ def compound_elements(graph):
     return elements
 
 
-def print_dict(dictionary):
+def print_graph(dictionary):
+    print("Graph ===================")
     for key in dictionary:
         print(str(key) + ": " + str(dictionary[key].connections))
+    print("=========================")

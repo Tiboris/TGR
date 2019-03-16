@@ -62,11 +62,14 @@ def format_out(chart):
             if line:
                 separator = ", "
             else:
-                separator = line
+                separator = ""
 
             line = line + separator + name
 
-        output = output + line + " (" + str(position) + ")\n"
+        if output:
+            line = "\n" + line
+
+        output = output + line + " (" + str(position) + ")"
     return output
 
 
@@ -74,7 +77,7 @@ def get_influencers(influencers, best, influencers_cnt=3, cost=0):
     if influencers_cnt == 0:
         return cost
 
-    parse.print_dict(influencers)
+    parse.print_graph(influencers)
     print(best)
 
     for person in influencers:
