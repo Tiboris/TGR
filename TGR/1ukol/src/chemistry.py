@@ -24,6 +24,15 @@ def subtask1(compound1, compound2):
     return compound1.vertex_cnt() == compound1.vertex_cnt()
 
 
+def subtask3(compound1, compound2):
+    """
+    * Grafy mají stejnou posloupnost stupňů uzlů
+    """
+    c1 = sorted([len(value.connections) for value in compound1.nodes.values()])
+    c2 = sorted([len(value.connections) for value in compound2.nodes.values()])
+    return c1 == c2
+
+
 def lookup_neighbours(compound1, compound2):
     neighbours = []  # FIXME
     return bool(neighbours)
@@ -35,16 +44,12 @@ def subtask2(compound1, compound2):
     """
     return subtask0(compound1, compound2) \
         and subtask1(compound1, compound2) \
+        and subtask3(compound1, compound2) \
         and lookup_neighbours(compound1, compound2)
 
 
-def subtask3(compound1, compound2):
-    """
-    * Grafy mají stejnou posloupnost stupňů uzlů
-    """
-    c1 = sorted([len(value.connections) for value in compound1.nodes.values()])
-    c2 = sorted([len(value.connections) for value in compound2.nodes.values()])
-    return c1 == c2
+def node_degree(node):
+    return len([neighbour for neighbour in node.connections])
 
 
 def subtask4(compound1, compound2):
@@ -64,8 +69,21 @@ def subtask5(compound1, compound2):
     """
     – množina stupňů sousedů uzlu v je rovna množině stupňů
     """
-    # FIXME
-    return str(len(compound1) != len(compound2)).lower()
+    r1 = []
+    r2 = []
+    for node in compound1.nodes:
+        n1 = []
+        for neighbour in compound1.nodes[node].connections:
+            n1.append(node_degree(compound1.nodes[neighbour]))
+        r1.append(sorted(n1))
+
+    for node in compound2.nodes:
+        n2 = []
+        for neighbour in compound2.nodes[node].connections:
+            n2.append(node_degree(compound2.nodes[neighbour]))
+        r2.append(sorted(n2))
+
+    return sorted(r1) == sorted(r2)
 
 
 def subtask6(compound1, compound2):
@@ -102,8 +120,8 @@ def subtask9(compound1, compound2):
 def run(data):
     compound1 = Graph([data[0]], Component, "-")
     compound2 = Graph([data[1]], Component, "-")
-    # compound1.print_graph()
-    # compound2.print_graph()
+    compound1.print_graph()
+    compound2.print_graph()
     print("* |U1| = |U2|: " + str(
         subtask0(compound1, compound2)).lower())
     print("* |H1| = |H2|: " + str(
