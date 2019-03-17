@@ -34,7 +34,6 @@ class Graph():
         """
         Inspired from: https://www.python.org/doc/essays/graphs/
         """
-        #  FIXME
         if start not in self.nodes or end not in self.nodes:
             return None
 
@@ -44,7 +43,7 @@ class Graph():
 
         for node in self.nodes[start].connections:
             if node not in path:
-                newpath = self.find_path(self.nodes, node, end, path)
+                newpath = self.find_path(node, end, path)
                 if newpath:
                     return newpath
 
@@ -54,7 +53,6 @@ class Graph():
         """
         Inspired from: https://www.python.org/doc/essays/graphs/
         """
-        #  FIXME
         if start not in self.nodes or end not in self.nodes:
             return None
 
@@ -65,7 +63,7 @@ class Graph():
         shortest = None
         for node in self.nodes[start].connections:
             if node not in path:
-                newpath = self.find_shortest_path(self.nodes, node, end, path)
+                newpath = self.find_shortest_path(node, end, path)
                 if newpath:
                     if not shortest or len(newpath) < len(shortest):
                         shortest = newpath
@@ -87,7 +85,7 @@ class Graph():
         paths = []
         for node in self.nodes[start].connections:
             if node not in path:
-                newpaths = self.find_all_paths(self.nodes, node, end, path)
+                newpaths = self.find_all_paths(node, end, path)
                 for newpath in newpaths:
                     paths.append(newpath)
 

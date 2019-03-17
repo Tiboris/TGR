@@ -90,15 +90,27 @@ def subtask6(compound1, compound2):
     """
     – obraz sledu je opět sled
     """
+    # sled1 = []
+    # for element in compound1.nodes:
+    #     sled1.append(compound1.walk([element]))
+    # sled2 = []
+    # for element in compound2.nodes:
+    #     sled2.append(compound2.walk([element]))
+    #
+    # print("--------------")
+    # print(sled1)
+    # print("--------------")
+    # print(sled2)
     # FIXME
-    return str(len(compound1) != len(compound2)).lower()
+    return subtask4(compound1, compound2)
 
 
 def subtask7(compound1, compound2):
     """
     – obraz tahu je opět tah
     """
-    return str(len(compound1) != len(compound2)).lower()
+    # FIXME
+    return subtask4(compound1, compound2)
 
 
 def subtask8(compound1, compound2):
@@ -106,7 +118,17 @@ def subtask8(compound1, compound2):
     – obraz cesty je opět cesta
     """
     # FIXME
-    return str(len(compound1) != len(compound2)).lower()
+    paths1 = []
+    for start in compound1.nodes:
+        for end in compound1.nodes:  # paths without len
+            paths1.append(len(compound1.find_all_paths(start, end)))
+
+    paths2 = []
+    for start in compound2.nodes:
+        for end in compound2.nodes:  # paths without len
+            paths2.append(len(compound2.find_all_paths(start, end)))
+
+    return sorted(paths1) == sorted(paths2)
 
 
 def subtask9(compound1, compound2):
@@ -114,14 +136,13 @@ def subtask9(compound1, compound2):
     – délka sledu zůstává zachována
     """
     # FIXME
-    return str(len(compound1) != len(compound2)).lower()
+    return subtask4(compound1, compound2)
 
 
 def run(data):
     compound1 = Graph([data[0]], Component, "-")
     compound2 = Graph([data[1]], Component, "-")
-    compound1.print_graph()
-    compound2.print_graph()
+
     print("* |U1| = |U2|: " + str(
         subtask0(compound1, compound2)).lower())
     print("* |H1| = |H2|: " + str(
