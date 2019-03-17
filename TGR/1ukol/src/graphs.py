@@ -30,6 +30,14 @@ class Graph():
     def vertex_cnt(self):
         return len(self.vertices)
 
+    def disconnect(self, a, b):
+        self.nodes[a].disconnect(b)
+        self.nodes[b].disconnect(a)
+        try:
+            self.vertices.remove(tuple([a, b]))
+        except ValueError:
+            pass
+
     def find_path(self, start, end, path=[]):
         """
         Inspired from: https://www.python.org/doc/essays/graphs/
