@@ -13,8 +13,6 @@ class Graph():
             input_nodes = parse.nodes(data)
 
         self.nodes = OrderedDict()
-        print(data)
-        print(input_nodes)
         for key in input_nodes:
             self.nodes[key] = Instance(key)
 
