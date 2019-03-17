@@ -1,6 +1,7 @@
 #!/usr/python3
-import parse
+from graphs import Graph
 from nodes import Component
+import parse
 
 
 def get_compounds(data):
@@ -25,11 +26,17 @@ def get_compounds(data):
 
 
 def subtask0(compound1, compound2):
-    return str(len(compound1) == len(compound2)).lower()
+    """
+    |U1| = |U2|
+    """
+    return str(compound1.nodes_cnt() == compound1.nodes_cnt()).lower()
 
 
 def subtask1(compound1, compound2):
-    return str(len(compound1) != len(compound2)).lower()
+    """
+    |H1| = |H2|
+    """
+    return str(compound1.vertex_cnt() == compound1.vertex_cnt()).lower()
 
 
 def subtask2(compound1, compound2):
@@ -65,11 +72,12 @@ def subtask9(compound1, compound2):
 
 
 def run(data):
-    compound1, compound2 = get_compounds(data)
-    parse.print_graph(compound1)
-    parse.print_graph(compound2)
+    compound1 = Graph([data[0]], Component, "-")
+    compound2 = Graph([data[1]], Component, "-")
+    # compound1.print_graph()
+    # compound2.print_graph()
     print("* |U1| = |U2|: " + subtask0(compound1, compound2))
-    print("* |H1| = |H2|: " + subtask2(compound1, compound2))
+    print("* |H1| = |H2|: " + subtask1(compound1, compound2))
     print("* Jsou-li u, v sousední uzly, pak i (u), (v) jsou sousední uzly: " +
           subtask2(compound1, compound2))
     print("* Grafy mají stejnou posloupnost stupňů uzlů: " +

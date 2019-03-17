@@ -1,5 +1,6 @@
 #!/usr/python3
-def nodes(data, nodes):
+def nodes(data):
+    nodes = []
     for node in data[0].split(','):
         nodes.append(node.split()[0])
 
@@ -8,12 +9,16 @@ def nodes(data, nodes):
 
 
 def connections(data, nodes, delimiter):
+    vertices = []
     for connetion in data:
         a, b = connetion.split(delimiter)
         if a in nodes and b in nodes:
+            vertices.append(tuple(connetion.split(delimiter)))
             nodes[a].connect(b)
             if ">" not in delimiter:
                 nodes[b].connect(a)
+
+    return vertices
 
 
 def compound_elements(graph):

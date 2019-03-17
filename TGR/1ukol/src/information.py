@@ -1,19 +1,8 @@
 #!/usr/python3
+from graphs import Graph
 from nodes import Person
 from collections import OrderedDict
 import parse
-
-
-def get_people_data(data):
-    nodes = []
-    people = {}
-
-    nodes = parse.nodes(data, nodes)
-    for name in nodes:
-        people[name] = Person(name)
-
-    parse.connections(data, people, " - ")
-    return people
 
 
 def add_list_item(record, item):
@@ -99,8 +88,8 @@ def subtask2(people):
 
 
 def run(data):
-    people = get_people_data(data)
+    people = Graph(data, Person, " - ")
     print("Task 1:")
-    subtask1(people)
+    subtask1(people.nodes)
     print("\nTask 2:")
-    subtask2(people)
+    subtask2(people.nodes)

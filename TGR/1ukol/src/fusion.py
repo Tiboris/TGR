@@ -1,6 +1,7 @@
 #!/usr/python3
-import parse
+from graphs import Graph
 from nodes import Town
+import parse
 
 
 def print_routes(routes):
@@ -8,7 +9,7 @@ def print_routes(routes):
         print(town + " -> " + route.direction())
 
 
-def fuse(upper_towns, lower_towns):
+def fuse(lower_towns, upper_towns):
     fused = {}
     redundant = {}
 
@@ -26,24 +27,18 @@ def fuse(upper_towns, lower_towns):
 
 
 def run(data):
-    lower_towns = {}
-    upper_towns = {}
-    nodes = []
-    nodes = parse.nodes(data, nodes)
+    data_lower = []
+    data_upper = []
+    for line in data:
+        if line[0].istitle():
+            data_upper.append(line)
+        else:
+            data_lower.append(line)
 
-    for name in nodes:
-        lower_towns[name] = Town(name)
+    lower_towns = Graph(data_lower, Town, " -> ")
+    upper_towns = Graph(data_upper, Town, " -> ")
 
-    nodes = []
-    nodes = parse.nodes(data, nodes)
-
-    for name in nodes:
-        upper_towns[name] = Town(name)
-
-    parse.connections(data, lower_towns, " -> ")
-    parse.connections(data, upper_towns, " -> ")
-
-    new_routes, to_delete = fuse(lower_towns, upper_towns)
+    new_routes, to_delete = fuse(lower_towns.nodes, upper_towns.nodes)
 
     print_routes(new_routes)
     print("----")

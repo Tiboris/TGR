@@ -46,6 +46,7 @@ class Component(Node):  # DFS
     # N = 5  # Dusík s pěti
     # S = 6  # Síra se šesti
 
-    def __init__(self, kind):
-        self.kind = self.nodeid = kind
+    def __init__(self, nodeid):
+        self.nodeid = nodeid
+        self.kind = self.nodeid[0]
         self.connections = []
