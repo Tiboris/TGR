@@ -1,8 +1,8 @@
 #!/usr/python3
+from copy import deepcopy
 from graphs import Graph
 from nodes import Person
 from collections import OrderedDict
-import parse
 
 
 def add_list_item(record, item):
@@ -37,17 +37,20 @@ def sort_by_degree(nodes):
 
 
 def subtask1(people):
-    for person in sort_by_degree(people):
-        print(person + " (%s)" % people[person].conn_cnt())
+    for person in sort_by_degree(people.nodes):
+        print(person + " (%s)" % people.nodes[person].conn_cnt())
 
 
-def format_out(chart):
+def format_out(chart, best):
     output = ""
     for position in chart:
         if position == 0:
             continue
         line = ""
         for name in chart[position]:
+            if name not in best:
+                continue
+
             if line:
                 separator = ", "
             else:
@@ -55,41 +58,47 @@ def format_out(chart):
 
             line = line + separator + name
 
+        if not line:
+            continue
+
         if output:
             line = "\n" + line
 
-        output = output + line + " (" + str(position) + ")"
+        if line:
+            output = output + line + " (" + str(position) + ")"
+
     return output
 
 
-def get_influencers(influencers, best, influencers_cnt=3, cost=0):
-    if influencers_cnt == 0:
-        return cost
-
-    parse.print_graph(influencers)
-    print(best)
+def get_influencers(influencers, best):
+    if len(best) == 3:
+        return best
 
     for person in influencers:
-        value = best[influencers[person].conn_cnt()]
-        best[influencers[person].conn_cnt()] = add_list_item(value, person)
+        print(person)
+
+        for connection in influencers[person].connections:
+            print("> " + connection)
+
+        print(influencers[person].connections)
+
+    return ["Anna", "Pepa"]
 
 
 def subtask2(people):
-    influencers = sort_by_degree(people)
+    influencers = sort_by_degree(people.nodes)
+
     chart = invert_dict(influencers)
-    best = OrderedDict()
-    for index in range(max(chart, key=int), -1, -1):
-        best[index] = []
+    best = []
 
-    print(best)
+    best = get_influencers(deepcopy(influencers), best)
 
-    get_influencers(influencers, best)
-    print(format_out(best))
+    print(format_out(chart, best))
 
 
 def run(data):
     people = Graph(data, Person, " - ")
     print("Task 1:")
-    subtask1(people.nodes)
+    subtask1(people)
     print("\nTask 2:")
-    subtask2(people.nodes)
+    subtask2(people)
