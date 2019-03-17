@@ -51,13 +51,20 @@ def subtask4(compound1, compound2):
     """
     – stupeň uzlu v je roven stupni uzlu φ(v)
     """
-    return str(len(compound1) != len(compound2)).lower()
+    for element in COMPONENTS:
+        cnt1 = [node for node in compound1.nodes if node == element]
+        cnt2 = [node for node in compound2.nodes if node == element]
+        if len(cnt1) != len(cnt2):
+            return False
+
+    return True
 
 
 def subtask5(compound1, compound2):
     """
     – množina stupňů sousedů uzlu v je rovna množině stupňů
     """
+    # FIXME
     return str(len(compound1) != len(compound2)).lower()
 
 
@@ -65,6 +72,7 @@ def subtask6(compound1, compound2):
     """
     – obraz sledu je opět sled
     """
+    # FIXME
     return str(len(compound1) != len(compound2)).lower()
 
 
@@ -79,6 +87,7 @@ def subtask8(compound1, compound2):
     """
     – obraz cesty je opět cesta
     """
+    # FIXME
     return str(len(compound1) != len(compound2)).lower()
 
 
@@ -86,6 +95,7 @@ def subtask9(compound1, compound2):
     """
     – délka sledu zůstává zachována
     """
+    # FIXME
     return str(len(compound1) != len(compound2)).lower()
 
 
