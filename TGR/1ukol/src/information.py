@@ -70,37 +70,28 @@ def format_out(chart, best):
     return output
 
 
-def get_influencers(influencers, best):
-    if len(best) == 3:
-        return best
+def get_best_influencer(influencers):
+    best = {}
+    sheeps = []
+    for name, person in influencers.items():
+        sheeps.append(name)
+        for connection in person.connections:
+            sheeps.append(connection)
+            for sheep in influencers[connection].connections:
+                if sheep not in sheeps:
+                    sheeps.append(sheep)
 
-    chart = invert_dict(influencers)
+        best[name] = len(sheeps)
+        sheeps = []
 
-    for key, people in chart.items():
-        for value in people:
-            best.append(value)
-            if len(best) == 3:
-                return best
-
-    return best
-
-    # for person in influencers:
-    #     print(person)
-    #
-    #     for connection in influencers[person].connections:
-    #         print("> " + connection)
-    #
-    #     print(influencers[person].connections)
+    best = sorted(best, key=best.get, reverse=True)
+    return best[:3]
 
 
 def subtask2(people):
     influencers = sort_by_degree(people.nodes)
-
     chart = invert_dict(influencers)
-    best = []
-
-    best = get_influencers(deepcopy(influencers), best)
-
+    best = get_best_influencer(deepcopy(influencers))
     print(format_out(chart, best))
 
 
