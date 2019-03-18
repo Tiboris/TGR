@@ -90,17 +90,6 @@ def subtask6(compound1, compound2):
     """
     – obraz sledu je opět sled
     """
-    # sled1 = []
-    # for element in compound1.nodes:
-    #     sled1.append(compound1.walk([element]))
-    # sled2 = []
-    # for element in compound2.nodes:
-    #     sled2.append(compound2.walk([element]))
-    #
-    # print("--------------")
-    # print(sled1)
-    # print("--------------")
-    # print(sled2)
     # FIXME
     return subtask4(compound1, compound2)
 
@@ -109,7 +98,6 @@ def subtask7(compound1, compound2):
     """
     – obraz tahu je opět tah
     """
-    # FIXME
     return subtask4(compound1, compound2)
 
 
@@ -117,7 +105,6 @@ def subtask8(compound1, compound2):
     """
     – obraz cesty je opět cesta
     """
-    # FIXME
     paths1 = []
     for start in compound1.nodes:
         for end in compound1.nodes:  # paths without len
@@ -135,7 +122,6 @@ def subtask9(compound1, compound2):
     """
     – délka sledu zůstává zachována
     """
-    # FIXME
     return subtask4(compound1, compound2)
 
 

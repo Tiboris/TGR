@@ -82,7 +82,6 @@ class Graph():
         """
         Inspired from: https://www.python.org/doc/essays/graphs/
         """
-        #  FIXME
         if start not in self.nodes or end not in self.nodes:
             return []
 
