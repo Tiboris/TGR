@@ -1,0 +1,6 @@
+power
+reset
+weakness
+avltree
+*.zip
+/src/__pycache_*/*
