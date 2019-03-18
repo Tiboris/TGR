@@ -74,15 +74,23 @@ def get_influencers(influencers, best):
     if len(best) == 3:
         return best
 
-    for person in influencers:
-        print(person)
+    chart = invert_dict(influencers)
 
-        for connection in influencers[person].connections:
-            print("> " + connection)
+    for key, people in chart.items():
+        for value in people:
+            best.append(value)
+            if len(best) == 3:
+                return best
 
-        print(influencers[person].connections)
+    return best
 
-    return ["Anna", "Pepa"]
+    # for person in influencers:
+    #     print(person)
+    #
+    #     for connection in influencers[person].connections:
+    #         print("> " + connection)
+    #
+    #     print(influencers[person].connections)
 
 
 def subtask2(people):
