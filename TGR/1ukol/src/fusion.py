@@ -1,7 +1,7 @@
 #!/usr/python3
 from graphs import Graph
 from nodes import Town
-import parse
+from copy import deepcopy
 
 
 def print_routes(routes):
@@ -19,7 +19,9 @@ def fuse(lower_towns, upper_towns):
                 route.direction().lower()):
             redundant[town.lower()] = lower_towns[town.lower()]
 
-    fused = {**upper_towns, **lower_towns}
+    fused = deepcopy(upper_towns)
+    fused.update(lower_towns)
+
     for key in redundant:
         del fused[key]
 
