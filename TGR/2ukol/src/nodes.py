@@ -50,3 +50,10 @@ class Component(Node):  # DFS
         self.nodeid = nodeid
         self.kind = self.nodeid[0]
         self.connections = []
+
+
+class Transformer(Node):
+
+    def __init__(self, nodeid):
+        self.nodeid = nodeid
+        self.connections = []

@@ -1,5 +1,10 @@
 #!/usr/python3
 
 
+def add_element(number):
+    print(number)
+
+
 def run(data):
-    print(data)
+    for number in data:
+        add_element(number)

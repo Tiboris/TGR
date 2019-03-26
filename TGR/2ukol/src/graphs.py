@@ -5,10 +5,12 @@ from collections import OrderedDict
 
 
 class Graph():
-    def __init__(self, data, Instance, delimiter):
+    def __init__(self, data, Instance, delimiter, weight_delim=""):
         if Instance == nodes.Component:
             data = parse.nodes(data)
             input_nodes = parse.compound_elements(data)
+        elif Instance == nodes.Transformer:
+            input_nodes = parse.transformers(data)
         else:
             input_nodes = parse.nodes(data)
 
@@ -16,7 +18,8 @@ class Graph():
         for key in input_nodes:
             self.nodes[key] = Instance(key)
 
-        self.vertices = parse.connections(data, self.nodes, delimiter)
+        self.vertices = parse.connections(data, self.nodes,
+                                          delimiter, weight_delim)
 
     def print_graph(self):
         print("Graph ===================")
@@ -29,6 +32,13 @@ class Graph():
 
     def vertex_cnt(self):
         return len(self.vertices)
+
+    def vertex_cost(self, a, b):
+        for vertex, cost in self.vertices.values():
+            if a in vertex and b in vertex:
+                return cost
+
+        return 0  # returns 0 if given node names are not in graph
 
     def disconnect(self, a, b):
         self.nodes[a].disconnect(b)

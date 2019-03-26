@@ -8,12 +8,28 @@ def nodes(data):
     return nodes
 
 
-def connections(data, nodes, delimiter):
-    vertices = []
-    for connetion in data:
-        a, b = connetion.split(delimiter)
+def transformers(data, delimiter=" - ", weight_delim=": "):
+    nodes = []
+    for line in data:
+        conn, _ = line.split(weight_delim)
+        a, b = conn.split(delimiter)
+        if a not in nodes:
+            nodes.append(a)
+
+        if b not in nodes:
+            nodes.append(b)
+
+    return nodes
+
+
+def connections(data, nodes, delimiter, weight_delim=""):
+
+    vertices = {}
+    for line in data:
+        conn, weight = line.split(weight_delim)
+        a, b = conn.split(delimiter)
         if a in nodes and b in nodes:
-            vertices.append(tuple(connetion.split(delimiter)))
+            vertices[conn] = weight if weight else 0
             nodes[a].connect(b)
             if ">" not in delimiter:
                 nodes[b].connect(a)

@@ -5,7 +5,7 @@ ukol2c = weakness
 ukol2d = avltree
 
 all:	$(ukol2a) $(ukol2b) $(ukol2c) $(ukol2d)
-# information
+
 $(ukol2a):
 	echo "python3 ./src/ukol2.py $(ukol2a)" > ./$(ukol2a)
 	chmod +x ./$(ukol2a)
