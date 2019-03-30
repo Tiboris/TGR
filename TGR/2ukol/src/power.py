@@ -1,5 +1,5 @@
 #!/usr/python3
-from graphs import Graph
+from graphs import Network
 from nodes import Transformer
 from structures import Stack
 
@@ -8,6 +8,13 @@ weight_delim = ": "
 
 
 def transformers_status_ok(transformers):
+    for start in transformers.nodes:
+        for end in transformers.nodes:
+            if end != start:
+                path = transformers.find_all_paths(start, end)
+                print(path)
+
+    transformers.unmark()
     transformers.print_graph()
     s = Stack()
 
@@ -19,7 +26,7 @@ def transformers_status_ok(transformers):
 
 
 def run(data):
-    transformers = Graph(data, Transformer, conn_delim, weight_delim)
+    transformers = Network(data, Transformer, conn_delim, weight_delim)
 
     if transformers_status_ok(transformers):
         print("Stav site OK")

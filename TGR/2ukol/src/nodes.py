@@ -56,4 +56,5 @@ class Transformer(Node):
 
     def __init__(self, nodeid):
         self.nodeid = nodeid
+        self.mark = False
         self.connections = []

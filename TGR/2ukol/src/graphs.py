@@ -107,3 +107,9 @@ class Graph():
                     paths.append(newpath)
 
         return paths
+
+
+class Network(Graph):
+    def unmark(self):
+        for node in self.nodes:
+            self.nodes[node].mark = False
