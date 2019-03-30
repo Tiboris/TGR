@@ -1,6 +1,7 @@
 #!/usr/python3
 import nodes
 import parse
+from structures import Stack, Queue
 from collections import OrderedDict
 
 
@@ -113,3 +114,21 @@ class Network(Graph):
     def unmark(self):
         for node in self.nodes:
             self.nodes[node].mark = False
+
+    def has_loop(self):
+        # pre každý transformátor nájdem všetky možné cesty k ostatným
+        # ak má jeden transformátor viac ako jednu cestu k nejakému z topológie
+        # topológia má slučky a nastavím si loop_in_topo na True.
+
+        loop_in_topo = False
+        for start in self.nodes:
+            for end in self.nodes:
+                if end != start:
+                    paths = self.find_all_paths(start, end)
+                    if len(paths) > 1:
+                        loop_in_topo = True
+                        break
+            if loop_in_topo:
+                break
+
+        return loop_in_topo
