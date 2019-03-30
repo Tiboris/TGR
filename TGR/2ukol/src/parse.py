@@ -29,7 +29,7 @@ def connections(data, nodes, delimiter, weight_delim=""):
         conn, weight = line.split(weight_delim)
         a, b = conn.split(delimiter)
         if a in nodes and b in nodes:
-            vertices[conn] = weight if weight else 0
+            vertices[conn] = int(weight) if weight else 0
             nodes[a].connect(b)
             if ">" not in delimiter:
                 nodes[b].connect(a)
