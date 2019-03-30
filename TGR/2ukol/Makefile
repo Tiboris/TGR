@@ -30,10 +30,10 @@ clean:
 	rm -fv ./$(login).zip
 
 run:
-	./$(ukol2a) < tests/$(ukol2a).basic.in
-	./$(ukol2b) < tests/$(ukol2b).basic.in
-	./$(ukol2c) < tests/$(ukol2c).basic.in
-	./$(ukol2d) < tests/$(ukol2d).basic.in
+	./$(ukol2a) < tests/$(ukol2a)_01.in
+	./$(ukol2b) < tests/$(ukol2b)_01.in
+	./$(ukol2c) < tests/$(ukol2c)_01.in
+	./$(ukol2d) < tests/$(ukol2d)_01.in
 
 test:
 	./test.sh $(ukol2a)
