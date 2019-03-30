@@ -1,11 +1,24 @@
 #!/usr/python3
-from graphs import Graph
+from copy import deepcopy  # tmp
+from graphs import Network
 from nodes import Transformer
+
+conn_delim = " - "
+weight_delim = ": "
+
+
+def cost(vertices):
+    total_cost = 0
+    for vertex, cost in vertices.items():
+        total_cost += cost
+
+    return total_cost
 
 
 def run(data):
-    transformers = Graph(data, Transformer, " - ", ": ")
+    transformers = Network(data, Transformer, conn_delim, weight_delim)
     transformers.print_graph()
 
-    for vertex in transformers.vertices:
-        print (vertex, transformers.vertices[vertex])
+    after_reset = deepcopy(transformers)
+
+    print("Hodnoceni:", cost(after_reset.vertices))
