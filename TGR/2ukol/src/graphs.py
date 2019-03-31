@@ -72,6 +72,11 @@ class Graph():
         a, b = vertex.split(self.delimiter)
         self.disconnect(a, b)
 
+    def empty(self):
+        self.vertices.clear()
+        for key in self.nodes:
+            self.nodes[key].connections = []
+
     def find_path(self, start, end, path=[]):
         """
         Inspired from: https://www.python.org/doc/essays/graphs/
@@ -137,6 +142,37 @@ class Network(Graph):
     def unmark(self):
         for node in self.nodes:
             self.nodes[node].mark = False
+
+    def is_tree(self):
+        return len(self.nodes) == (len(self.vertices) + 1)
+
+    def bfs_walk(self):
+        que = Queue()
+        que.enqueue(next(iter(self.nodes.values())))
+        while que.size() > 0:
+            first = que.dequeue()
+            if first.mark:
+                continue
+            else:
+                print(first.name)
+                first.mark = True
+
+            for neighbour in first.connections:
+                que.enqueue(self.nodes[neighbour])
+
+    def dfs_walk(self):
+        stack = Stack()
+        stack.push(next(iter(self.nodes.values())))
+        while stack.size() > 0:
+            first = stack.pop()
+            if first.mark:
+                continue
+            else:
+                print(first.name)
+                first.mark = True
+
+            for neighbour in first.connections:
+                stack.push(self.nodes[neighbour])
 
     def has_loop(self):
         # pre každý transformátor nájdem všetky možné cesty k ostatným

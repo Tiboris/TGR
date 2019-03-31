@@ -50,6 +50,26 @@ def compound_elements(graph):
     return elements
 
 
+def add_list_item(record, item):
+    if record is None:
+        record = []
+
+    record.append(item)
+    return record
+
+
+def invert_dict(nodes):
+    inverted_dict = {}
+    for key in nodes:
+        try:
+            record = inverted_dict[nodes[key]]
+        except KeyError:
+            record = []
+        inverted_dict[nodes[key]] = add_list_item(record, key)
+
+    return sorted(inverted_dict), inverted_dict
+
+
 def print_graph(dictionary):
     print("Graph ===================")
     for key in dictionary:

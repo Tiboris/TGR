@@ -4,7 +4,8 @@ from nodes import Transformer
 
 
 def transformers_status_ok(transformers):
-    return not transformers.has_loop()
+    # for multiple component input better use has_loop()
+    return transformers.is_tree()
 
 
 def run(data):

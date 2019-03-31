@@ -55,7 +55,7 @@ class Component(Node):  # DFS
 class Transformer(Node):
 
     def __init__(self, nodeid):
-        self.nodeid = nodeid
+        self.nodeid = self.name = nodeid
         self.mark = False
         self.connections = []
 
