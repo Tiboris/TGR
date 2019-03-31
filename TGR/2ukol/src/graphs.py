@@ -23,6 +23,18 @@ class Graph():
         self.vertices = parse.connections(data, self.nodes,
                                           delimiter, weight_delim)
 
+    def get_neighbours(self, objnode):
+        res = []
+        if isinstance(objnode, nodes.Transformer):
+            for neighbour in objnode.connections:
+                res.append(self.nodes[neighbour])
+        else:
+            for obj in objnode:
+                for neighbour in obj.connections:
+                    res.append(self.nodes[neighbour])
+
+        return tuple(res)
+
     def print_graph(self):
         print("Graph ===================")
         for key in self.nodes:

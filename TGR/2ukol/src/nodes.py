@@ -59,6 +59,9 @@ class Transformer(Node):
         self.mark = False
         self.connections = []
 
+    def __iter__(self):
+        return self
+
 
 class Leaf():
     def __init__(self, key):

@@ -1,6 +1,6 @@
 #!/usr/python3
 from copy import deepcopy
-from graphs import Graph
+from graphs import Network
 from nodes import Transformer
 
 
@@ -23,7 +23,15 @@ def subtask2(transformers):  # node removal
 
 
 def run(data):
-    transformers = Graph(data, Transformer, " - ", ": ")
-    subtask1(transformers)
-    print("-|-|-|-|-|-|-|-|-|-")
-    subtask2(transformers)
+    transformers = Network(data, Transformer, " - ", ": ")
+    paths = []
+    for start in transformers.nodes:
+        for end in transformers.nodes:  # paths without len
+            paths.append(transformers.find_all_paths(start, end))
+            if [] in paths:
+                print("NEDA SA MI")
+            # paths.append()
+
+    print(paths)
+
+    
