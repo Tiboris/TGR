@@ -23,6 +23,16 @@ class Graph():
         self.vertices = parse.connections(data, self.nodes,
                                           delimiter, weight_delim)
 
+    def is_multi_component(self):
+        paths = []
+        for start in self.nodes:
+            for end in self.nodes:  # paths without len
+                paths.append(self.find_all_paths(start, end))
+                if [] in paths:
+                    return True
+
+        return False
+
     def get_neighbours(self, objnode):
         res = []
         if isinstance(objnode, nodes.Transformer):

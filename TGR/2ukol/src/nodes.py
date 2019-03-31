@@ -62,6 +62,8 @@ class Transformer(Node):
     def __iter__(self):
         return self
 
+    def __repr__(self):
+        return "<Transformer({})>".format(self.nodeid)
 
 class Leaf():
     def __init__(self, key):

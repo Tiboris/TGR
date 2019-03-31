@@ -5,33 +5,29 @@ from nodes import Transformer
 
 
 def subtask1(transformers):
-    transformers.print_graph()
-    print("-------------------")
+    res = []
     for vertex in transformers.vertices:
         tmp = deepcopy(transformers)
         tmp.remove_vertex(vertex)
-        tmp.print_graph()
+        if tmp.is_multi_component():
+            res.append(vertex)
+
+    return res
 
 
 def subtask2(transformers):  # node removal
-    transformers.print_graph()
-    print("-------------------")
+    res = []
     for node in transformers.nodes:
         tmp = deepcopy(transformers)
         tmp.remove_node(node)
-        tmp.print_graph()
+        if tmp.is_multi_component():
+            res.append(node)
+
+    return res
 
 
 def run(data):
     transformers = Network(data, Transformer, " - ", ": ")
-    paths = []
-    for start in transformers.nodes:
-        for end in transformers.nodes:  # paths without len
-            paths.append(transformers.find_all_paths(start, end))
-            if [] in paths:
-                print("NEDA SA MI")
-            # paths.append()
 
-    print(paths)
-
-    
+    print("\n".join([v for v in subtask1(transformers)]))
+    print("\n".join([v for v in subtask2(transformers)]))
