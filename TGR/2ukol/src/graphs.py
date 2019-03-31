@@ -132,3 +132,108 @@ class Network(Graph):
                 break
 
         return loop_in_topo
+
+
+class AVLTree():
+    def __init__(self):
+        self.node = None
+        self.height = -1
+        self.balance = 0
+
+    def get_height(self):
+        return self.height if self.node else 0
+
+    def insert(self, key):
+        if self.node is None:
+            self.node = nodes.Leaf(key)
+            self.node.left = AVLTree()
+            self.node.right = AVLTree()
+        elif key < self.node.key:
+            self.node.left.insert(key)
+        else:
+            self.node.right.insert(key)
+
+        self.update_heights(recursive=False)
+        self.update_balances(recursive=False)
+
+        while self.balance < -1 or self.balance > 1:
+            if self.balance > 1:
+                if self.node.left.balance < 0:
+                    self.node.left.rotate_left()
+                    self.update_heights()
+                    self.update_balances()
+
+                self.rotate_right()
+                self.update_heights()
+                self.update_balances()
+
+            if self.balance < -1:
+                if self.node.right.balance > 0:
+                    self.node.right.rotate_right()
+                    self.update_heights()
+                    self.update_balances()
+
+                self.rotate_left()
+                self.update_heights()
+                self.update_balances()
+
+    def rotate_right(self):
+        root = self.node
+        left_child = self.node.left.node
+        right_child = left_child.right.node
+
+        self.node = left_child
+        left_child.right.node = root
+        root.left.node = right_child
+
+    def rotate_left(self):
+        root = self.node
+        right_child = self.node.right.node
+        left_child = right_child.left.node
+
+        self.node = right_child
+        right_child.left.node = root
+        root.right.node = left_child
+
+    def update_heights(self, recursive=True):
+        if self.node is None:
+            self.height = -1
+        else:
+            if recursive:
+                if self.node.left:
+                    self.node.left.update_heights()
+                if self.node.right:
+                    self.node.right.update_heights()
+
+            self.height = 1 + max(self.node.left.height,
+                                  self.node.right.height)
+
+    def update_balances(self, recursive=True):
+        if self.node:
+            if recursive:
+                if self.node.left:
+                    self.node.left.update_balances()
+                if self.node.right:
+                    self.node.right.update_balances()
+
+            self.balance = self.node.left.height - self.node.right.height
+        else:
+            self.balance = 0
+
+    def print_level_order(self):  # BFS
+        q = Queue()
+        out = []
+        q.enqueue(self.node)
+        while q.size() > 0:
+            actual = q.dequeue()
+
+            out.append(str(actual.key)) if actual else out.append("_")
+
+            if actual:
+                if actual.left:
+                    q.enqueue(actual.left.node)
+
+                if actual.right:
+                    q.enqueue(actual.right.node)
+
+        print(out)

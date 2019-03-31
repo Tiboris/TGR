@@ -58,3 +58,10 @@ class Transformer(Node):
         self.nodeid = nodeid
         self.mark = False
         self.connections = []
+
+
+class Leaf():
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None

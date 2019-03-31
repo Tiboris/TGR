@@ -1,10 +1,11 @@
 #!/usr/python3
-
-
-def add_element(number):
-    print(number)
+from graphs import AVLTree
 
 
 def run(data):
+    tree = AVLTree()
     for number in data:
-        add_element(number)
+        print(number)
+        tree.insert(number)
+        tree.print_level_order()
+        print("----")
