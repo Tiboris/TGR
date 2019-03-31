@@ -7,6 +7,7 @@ from collections import OrderedDict
 
 class Graph():
     def __init__(self, data, Instance, delimiter, weight_delim=""):
+        self.delimiter = delimiter
         if Instance == nodes.Component:
             data = parse.nodes(data)
             input_nodes = parse.compound_elements(data)
@@ -45,9 +46,31 @@ class Graph():
         self.nodes[a].disconnect(b)
         self.nodes[b].disconnect(a)
         try:
-            self.vertices.remove(tuple([a, b]))
-        except ValueError:
+            del self.vertices[a + self.delimiter + b]
+        except KeyError:
             pass
+
+    def remove_node(self, node_name):
+        try:
+            del self.nodes[node_name]
+        except KeyError:
+            pass
+
+        to_del = []
+        for vertex in self.vertices:
+            if node_name in vertex:
+                to_del.append(vertex)
+
+        for vertex in to_del:
+            del self.vertices[vertex]
+
+        for node in self.nodes:
+            if node_name in self.nodes[node].connections:
+                self.nodes[node].connections.remove(node_name)
+
+    def remove_vertex(self, vertex):
+        a, b = vertex.split(self.delimiter)
+        self.disconnect(a, b)
 
     def find_path(self, start, end, path=[]):
         """
@@ -220,7 +243,7 @@ class AVLTree():
         else:
             self.balance = 0
 
-    def print_level_order(self):  # BFS
+    def print_level_order(self, level=0):
         q = Queue()
         out = []
         q.enqueue(self.node)

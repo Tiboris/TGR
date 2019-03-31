@@ -3,9 +3,6 @@ from copy import deepcopy  # tmp
 from graphs import Network
 from nodes import Transformer
 
-conn_delim = " - "
-weight_delim = ": "
-
 
 def cost(vertices):
     total_cost = 0
@@ -16,7 +13,7 @@ def cost(vertices):
 
 
 def run(data):
-    transformers = Network(data, Transformer, conn_delim, weight_delim)
+    transformers = Network(data, Transformer, " - ", ": ")
     transformers.print_graph()
 
     after_reset = deepcopy(transformers)

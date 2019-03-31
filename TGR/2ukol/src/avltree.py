@@ -8,4 +8,3 @@ def run(data):
         print(number)
         tree.insert(number)
         tree.print_level_order()
-        print("----")
