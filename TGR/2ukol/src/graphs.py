@@ -350,7 +350,6 @@ class AVLTree():
             res = res + line
 
         result = ""
-        cnt = 0
         index = 0
         for char in res.split(","):
             index += 1
