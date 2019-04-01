@@ -303,6 +303,29 @@ class AVLTree():
         else:
             self.balance = 0
 
+    def format_avl(self, tmp):
+        res = ""
+        for key, value in tmp.items():
+            line = ""
+            for record in value:
+                line = line + record + ","
+
+            res = res + line
+
+        result = ""
+        index = 0
+        for char in res.split(","):
+            index += 1
+            if len(result) == 0 or index in [2**x-1 for x in range(10)]:
+                delim = "|"
+            else:
+                delim = ","
+
+            if char:
+                result += char + delim
+
+        return result
+
     def print_level_order(self):
         q = Queue()
         tmp = OrderedDict()
@@ -340,25 +363,5 @@ class AVLTree():
                 else:
                     tmp[level-1].append("_")
 
-        res = ""
-        for key, value in tmp.items():
-            line = ""
-            for record in value:
-                # if res:
-                line = line + record + ","
-
-            res = res + line
-
-        result = ""
-        index = 0
-        for char in res.split(","):
-            index += 1
-            if len(result) == 0 or index in [2**x-1 for x in range(10)]:
-                delim = "|"
-            else:
-                delim = ","
-
-            if char:
-                result += char + delim
-
+        result = self.format_avl(tmp)
         print(result)
