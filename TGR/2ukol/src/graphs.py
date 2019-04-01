@@ -349,4 +349,17 @@ class AVLTree():
 
             res = res + line
 
-        print(res)
+        result = ""
+        cnt = 0
+        index = 0
+        for char in res.split(","):
+            index += 1
+            if len(result) == 0 or index in [2**x-1 for x in range(10)]:
+                delim = "|"
+            else:
+                delim = ","
+
+            if char:
+                result += char + delim
+
+        print(result)
