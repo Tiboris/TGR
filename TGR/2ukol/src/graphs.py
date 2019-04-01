@@ -229,6 +229,7 @@ class AVLTree():
             self.node = nodes.Leaf(key)
             self.node.left = AVLTree()
             self.node.right = AVLTree()
+            self.node.level = self.height
         elif key < self.node.key:
             self.node.left.insert(key)
         else:
@@ -288,6 +289,7 @@ class AVLTree():
 
             self.height = 1 + max(self.node.left.height,
                                   self.node.right.height)
+            self.node.level = self.height
 
     def update_balances(self, recursive=True):
         if self.node:
@@ -305,16 +307,44 @@ class AVLTree():
         q = Queue()
         out = []
         q.enqueue(self.node)
+        level = 0
         while q.size() > 0:
             actual = q.dequeue()
 
-            out.append(str(actual.key)) if actual else out.append("_")
-
             if actual:
+                if level != actual.level:
+                    print(actual.level)
+                    if out:
+                        out.append("|")
+
+                    level = actual.level
+
+                out.append(str(actual.key))
                 if actual.left:
                     q.enqueue(actual.left.node)
 
                 if actual.right:
                     q.enqueue(actual.right.node)
+                parent = actual
+            else:
+                print("a")
+                # if not parent.left.node and not parent.right.node:
+                #     out.append("_")
+                # if parent.left.node or parent.right.node:
+                #     out.append("_")
+                #     parent = actual
 
-        print(out)
+        # vyska stromu a pridavat _ len po urcity level
+
+        # drist ale da sa na tom stavat
+        # end = out[(2**self.height):]
+        # # print("end", end)
+        # if len(set(end)) == 1:
+        #     out = out[:(2**self.height)];
+        # for i in range(self.height):
+        #     out.insert(2**i+i*2, "|")
+        string = ""
+        for item in out:
+            string = string + str(item) + ","
+
+        print(string)
