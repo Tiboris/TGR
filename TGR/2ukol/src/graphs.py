@@ -303,8 +303,14 @@ class AVLTree():
         else:
             self.balance = 0
 
-    def print_level_order(self, level=0):
+    def print_level_order(self):
         q = Queue()
+        tmp = OrderedDict()
+        for index in range(self.get_height(), -1, -1):
+            # print(index)
+            tmp[index] = []
+
+        # print(tmp)
         out = []
         q.enqueue(self.node)
         level = 0
@@ -313,12 +319,12 @@ class AVLTree():
 
             if actual:
                 if level != actual.level:
-                    print(actual.level)
+                    # print(actual.level)
                     if out:
                         out.append("|")
 
                     level = actual.level
-
+                tmp[level].append(str(actual.key))
                 out.append(str(actual.key))
                 if actual.left:
                     q.enqueue(actual.left.node)
@@ -326,25 +332,18 @@ class AVLTree():
                 if actual.right:
                     q.enqueue(actual.right.node)
                 parent = actual
-            else:
-                print("a")
-                # if not parent.left.node and not parent.right.node:
-                #     out.append("_")
-                # if parent.left.node or parent.right.node:
-                #     out.append("_")
-                #     parent = actual
+            elif parent:
+                if not parent.left.node and not parent.right.node:
+                    out.append("_")
+                    tmp[level].append("_")
+                parent = actual
 
-        # vyska stromu a pridavat _ len po urcity level
+        # print(tmp)
+        res = ""
+        for key, value in tmp.items():
+            line = ""
+            for record in value:
+                line = line + record + ","
+            res = res + line + "|"
 
-        # drist ale da sa na tom stavat
-        # end = out[(2**self.height):]
-        # # print("end", end)
-        # if len(set(end)) == 1:
-        #     out = out[:(2**self.height)];
-        # for i in range(self.height):
-        #     out.insert(2**i+i*2, "|")
-        string = ""
-        for item in out:
-            string = string + str(item) + ","
-
-        print(string)
+        print(res)
