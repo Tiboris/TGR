@@ -28,6 +28,8 @@ def subtask2(transformers):  # node removal
 
 def run(data):
     transformers = Network(data, Transformer, " - ", ": ")
-
-    print("\n".join([v for v in subtask1(transformers)]))
-    print("\n".join([v for v in subtask2(transformers)]))
+    if not transformers.is_multi_component():
+        print("\n".join([v for v in subtask1(transformers)]))
+        print("\n".join([v for v in subtask2(transformers)]))
+    else:
+        print("Error: Input has more than one component")
