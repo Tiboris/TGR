@@ -306,44 +306,47 @@ class AVLTree():
     def print_level_order(self):
         q = Queue()
         tmp = OrderedDict()
-        for index in range(self.get_height(), -1, -1):
-            # print(index)
+        for index in range(self.get_height(), -2, -1):
             tmp[index] = []
 
-        # print(tmp)
-        out = []
         q.enqueue(self.node)
         level = 0
+
         while q.size() > 0:
             actual = q.dequeue()
 
             if actual:
                 if level != actual.level:
-                    # print(actual.level)
-                    if out:
-                        out.append("|")
-
                     level = actual.level
+
                 tmp[level].append(str(actual.key))
-                out.append(str(actual.key))
+
                 if actual.left:
                     q.enqueue(actual.left.node)
 
                 if actual.right:
                     q.enqueue(actual.right.node)
-                parent = actual
-            elif parent:
-                if not parent.left.node and not parent.right.node:
-                    out.append("_")
-                    tmp[level].append("_")
+
                 parent = actual
 
-        # print(tmp)
+            else:
+                if parent:
+                    if parent.left.node or parent.right.node:
+                        tmp[level-1].append("_")
+                    if not parent.left.node and not parent.right.node:
+                        tmp[level-1].append("_")
+
+                    parent = actual
+                else:
+                    tmp[level-1].append("_")
+
         res = ""
         for key, value in tmp.items():
             line = ""
             for record in value:
+                # if res:
                 line = line + record + ","
-            res = res + line + "|"
+
+            res = res + line
 
         print(res)
