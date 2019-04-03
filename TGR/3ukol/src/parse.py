@@ -23,11 +23,13 @@ def transformers(data, delimiter=" - ", weight_delim=": "):
 
 
 def crossroads(data, delimiter=": ", record_delim=","):
+    res = {}
     for line in data:
         crossroad, records = line.split(delimiter, maxsplit=1)
         neigbours = [r.strip() for r in records.split(record_delim)]
+        res[crossroad] = neigbours
 
-    return crossroad, neigbours
+    return res
 
 
 def connections(data, nodes, delimiter, weight_delim=""):
