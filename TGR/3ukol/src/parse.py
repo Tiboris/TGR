@@ -1,7 +1,7 @@
 #!/usr/python3
 def nodes(data):
     nodes = []
-    for node in data[0].split(','):
+    for node in data[0].split(","):
         nodes.append(node.split()[0])
 
     del data[0]
@@ -22,8 +22,15 @@ def transformers(data, delimiter=" - ", weight_delim=": "):
     return nodes
 
 
-def connections(data, nodes, delimiter, weight_delim=""):
+def crossroads(data, delimiter=": ", record_delim=","):
+    for line in data:
+        crossroad, records = line.split(delimiter, maxsplit=1)
+        neigbours = [r.strip() for r in records.split(record_delim)]
 
+    return crossroad, neigbours
+
+
+def connections(data, nodes, delimiter, weight_delim=""):
     vertices = {}
     for line in data:
         conn, weight = line.split(weight_delim)
@@ -40,7 +47,7 @@ def connections(data, nodes, delimiter, weight_delim=""):
 def compound_elements(graph):
     elements = []
     for connection in graph:
-        a, b = connection.split('-')
+        a, b = connection.split("-")
         if a not in elements:
             elements.append(a)
 
@@ -75,4 +82,3 @@ def print_graph(dictionary):
     for key in dictionary:
         print(str(key) + ": " + str(dictionary[key].connections))
     print("=========================")
-
