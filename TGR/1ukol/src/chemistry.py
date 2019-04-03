@@ -2,12 +2,14 @@
 from graphs import Graph
 from nodes import Component
 
-COMPONENTS = {"H": 1,  # Vodík s jednou vazbou
-              "O": 2,  # Kyslík se dvěma vazbami
-              "B": 3,  # Bor se třemi
-              "C": 4,  # Uhlík se čtyřmi
-              "N": 5,  # Dusík s pěti
-              "S": 6}  # Síra se šesti
+COMPONENTS = {
+    "H": 1,  # Vodík s jednou vazbou
+    "O": 2,  # Kyslík se dvěma vazbami
+    "B": 3,  # Bor se třemi
+    "C": 4,  # Uhlík se čtyřmi
+    "N": 5,  # Dusík s pěti
+    "S": 6,
+}  # Síra se šesti
 
 
 def subtask0(compound1, compound2):
@@ -42,10 +44,12 @@ def subtask2(compound1, compound2):
     """
     * Jsou-li u, v sousední uzly, pak i (u), (v) jsou sousední uzly
     """
-    return subtask0(compound1, compound2) \
-        and subtask1(compound1, compound2) \
-        and subtask3(compound1, compound2) \
+    return (
+        subtask0(compound1, compound2)
+        and subtask1(compound1, compound2)
+        and subtask3(compound1, compound2)
         and lookup_neighbours(compound1, compound2)
+    )
 
 
 def node_degree(node):
@@ -129,25 +133,39 @@ def run(data):
     compound1 = Graph([data[0]], Component, "-")
     compound2 = Graph([data[1]], Component, "-")
 
-    print("* |U1| = |U2|: " + str(
-        subtask0(compound1, compound2)).lower())
-    print("* |H1| = |H2|: " + str(
-        subtask1(compound1, compound2)).lower())
-    print("* Jsou-li u, v sousední uzly, pak i (u), (v) jsou sousední uzly: " +
-          str(subtask2(compound1, compound2)).lower())
-    print("* Grafy mají stejnou posloupnost stupňů uzlů: " +
-          str(subtask3(compound1, compound2)).lower())
+    print("* |U1| = |U2|: " + str(subtask0(compound1, compound2)).lower())
+    print("* |H1| = |H2|: " + str(subtask1(compound1, compound2)).lower())
+    print(
+        "* Jsou-li u, v sousední uzly, pak i (u), (v) jsou sousední uzly: "
+        + str(subtask2(compound1, compound2)).lower()
+    )
+    print(
+        "* Grafy mají stejnou posloupnost stupňů uzlů: "
+        + str(subtask3(compound1, compound2)).lower()
+    )
     print("* Pak pro každý uzel v z U platí")
-    print("\t– stupeň uzlu v je roven stupni uzlu φ(v): " +
-          str(subtask4(compound1, compound2)).lower())
-    print("\t– množina stupňů sousedů uzlu v je rovna množině stupňů "
-          "sousedů uzlu φ(v): " + str(subtask5(compound1, compound2)).lower())
+    print(
+        "\t– stupeň uzlu v je roven stupni uzlu φ(v): "
+        + str(subtask4(compound1, compound2)).lower()
+    )
+    print(
+        "\t– množina stupňů sousedů uzlu v je rovna množině stupňů "
+        "sousedů uzlu φ(v): " + str(subtask5(compound1, compound2)).lower()
+    )
     print("* Pak pro každý sled platí")
-    print("\t– obraz sledu je opět sled: " + str(
-          subtask6(compound1, compound2)).lower())
-    print("\t– obraz tahu je opět tah: " + str(
-          subtask7(compound1, compound2)).lower())
-    print("\t– obraz cesty je opět cesta: " + str(
-          subtask8(compound1, compound2)).lower())
-    print("\t– délka sledu zůstává zachována: " +
-          str(subtask9(compound1, compound2)).lower())
+    print(
+        "\t– obraz sledu je opět sled: "
+        + str(subtask6(compound1, compound2)).lower()
+    )
+    print(
+        "\t– obraz tahu je opět tah: "
+        + str(subtask7(compound1, compound2)).lower()
+    )
+    print(
+        "\t– obraz cesty je opět cesta: "
+        + str(subtask8(compound1, compound2)).lower()
+    )
+    print(
+        "\t– délka sledu zůstává zachována: "
+        + str(subtask9(compound1, compound2)).lower()
+    )

@@ -1,11 +1,13 @@
 #!/usr/python3
-import nodes
-import parse
-from structures import Stack, Queue
 from collections import OrderedDict
 
+import nodes
+import parse
+from structures import Queue
+from structures import Stack
 
-class Graph():
+
+class Graph:
     def __init__(self, data, Instance, delimiter, weight_delim=""):
         self.delimiter = delimiter
         if Instance == nodes.Component:
@@ -20,8 +22,9 @@ class Graph():
         for key in input_nodes:
             self.nodes[key] = Instance(key)
 
-        self.vertices = parse.connections(data, self.nodes,
-                                          delimiter, weight_delim)
+        self.vertices = parse.connections(
+            data, self.nodes, delimiter, weight_delim
+        )
 
     def is_multi_component(self):
         paths = []
@@ -215,7 +218,7 @@ class Network(Graph):
         return loop_in_topo
 
 
-class AVLTree():
+class AVLTree:
     def __init__(self):
         self.node = None
         self.height = -1
@@ -287,8 +290,9 @@ class AVLTree():
                 if self.node.right:
                     self.node.right.update_heights()
 
-            self.height = 1 + max(self.node.left.height,
-                                  self.node.right.height)
+            self.height = 1 + max(
+                self.node.left.height, self.node.right.height
+            )
             self.node.level = self.height
 
     def update_balances(self, recursive=True):
@@ -316,7 +320,7 @@ class AVLTree():
         index = 0
         for char in res.split(","):
             index += 1
-            if len(result) == 0 or index in [2**x-1 for x in range(10)]:
+            if len(result) == 0 or index in [2 ** x - 1 for x in range(10)]:
                 delim = "|"
             else:
                 delim = ","
@@ -355,13 +359,13 @@ class AVLTree():
             else:
                 if parent:
                     if parent.left.node or parent.right.node:
-                        tmp[level-1].append("_")
+                        tmp[level - 1].append("_")
                     if not parent.left.node and not parent.right.node:
-                        tmp[level-1].append("_")
+                        tmp[level - 1].append("_")
 
                     parent = actual
                 else:
-                    tmp[level-1].append("_")
+                    tmp[level - 1].append("_")
 
         result = self.format_avl(tmp)
         print(result)

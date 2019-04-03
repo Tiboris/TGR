@@ -1,8 +1,9 @@
 #!/usr/python3
+from collections import OrderedDict
 from copy import deepcopy
+
 from graphs import Graph
 from nodes import Person
-from collections import OrderedDict
 
 
 def add_list_item(record, item):

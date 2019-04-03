@@ -1,7 +1,8 @@
 #!/usr/python3
+from copy import deepcopy
+
 from graphs import Graph
 from nodes import Town
-from copy import deepcopy
 
 
 def print_routes(routes):
@@ -14,9 +15,9 @@ def fuse(lower_towns, upper_towns):
     redundant = {}
 
     for town, route in upper_towns.items():
-        if town.lower() in lower_towns and \
-            lower_towns[town.lower()].has_connection_with(
-                route.direction().lower()):
+        if town.lower() in lower_towns and lower_towns[
+            town.lower()
+        ].has_connection_with(route.direction().lower()):
             redundant[town.lower()] = lower_towns[town.lower()]
 
     fused = deepcopy(upper_towns)

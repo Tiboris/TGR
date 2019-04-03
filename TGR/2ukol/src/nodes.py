@@ -53,7 +53,6 @@ class Component(Node):  # DFS
 
 
 class Transformer(Node):
-
     def __init__(self, nodeid):
         self.nodeid = self.name = nodeid
         self.mark = False
@@ -63,10 +62,10 @@ class Transformer(Node):
         return self
 
     def __repr__(self):
-        return "<Transformer({})>".format(self.nodeid)
+        return f"<Transformer({self.nodeid})>"
 
 
-class Leaf():
+class Leaf:
     def __init__(self, key):
         self.key = key
         self.left = None
@@ -74,4 +73,4 @@ class Leaf():
         self.level = None
 
     def __repr__(self):
-        return "<Node({})>".format(self.key)
+        return f"<Node({self.key})>"

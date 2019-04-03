@@ -1,1 +1,1 @@
-Prečítajte si Pokyny\_k\_vypracovani\_ukolu.pdf 
+Prečítajte si Pokyny\_k\_vypracovani\_ukolu.pdf

@@ -1,5 +1,6 @@
 #!/usr/python3
 from copy import deepcopy
+
 from graphs import Network
 from nodes import Transformer
 from parse import invert_dict
@@ -37,7 +38,7 @@ def run(data):
 
     total_cost = 0
     for vertex, cost in after_reset.vertices.items():
-        print('{}: {}'.format(vertex, cost))
+        print(f"{vertex}: {cost}")
         total_cost += cost
 
     print("Hodnoceni:", total_cost)

@@ -1,5 +1,6 @@
 #!/usr/python3
 from copy import deepcopy
+
 from graphs import Network
 from nodes import Transformer
 

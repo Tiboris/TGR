@@ -1,10 +1,11 @@
 #!/usr/python3
-import nodes
-import parse
 from collections import OrderedDict
 
+import nodes
+import parse
 
-class Graph():
+
+class Graph:
     def __init__(self, data, Instance, delimiter):
         if Instance == nodes.Component:
             data = parse.nodes(data)

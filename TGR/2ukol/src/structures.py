@@ -1,8 +1,8 @@
 #!/usr/python3
 # Inspired from: https://stackabuse.com/stacks-and-queues-in-python/
-
-
 # A simple class stack that only allows pop and push operations
+
+
 class Stack:
     def __init__(self):
         self.stack = []
@@ -11,7 +11,7 @@ class Stack:
         print("--------------------")
         print("Stack:")
         for index in range(self.size(), 0, -1):
-            print(self.stack[index-1])
+            print(self.stack[index - 1])
 
         print("--------------------")
 
