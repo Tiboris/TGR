@@ -1,4 +1,5 @@
 #!/usr/python3
+import re
 from collections import OrderedDict
 
 import nodes
@@ -8,23 +9,40 @@ from structures import Stack
 
 
 class Graph:
-    def __init__(self, data, Instance, delimiter, weight_delim=""):
+    def __init__(self, data, Instance, delimiter=",", weight_delim=""):
         self.delimiter = delimiter
         if Instance == nodes.Component:
             data = parse.nodes(data)
             input_nodes = parse.compound_elements(data)
         elif Instance == nodes.Transformer:
             input_nodes = parse.transformers(data)
+        elif Instance == nodes.Crossroad:
+            input_nodes = parse.crossroads(data)
         else:
             input_nodes = parse.nodes(data)
 
         self.nodes = OrderedDict()
         for key in input_nodes:
-            self.nodes[key] = Instance(key)
+            if "+" in key:  # spartan race
+                self.nodes[key[0]] = Instance(key[0], True)
+            else:
+                self.nodes[key] = Instance(key)
 
-        self.vertices = parse.connections(
-            data, self.nodes, delimiter, weight_delim
-        )
+        if Instance == nodes.Crossroad:
+            self.vertices = {}
+            for crossroad, neighbours in input_nodes.items():
+                for neighbour in neighbours:
+                    res = re.search(r"(\w)\((-?\d+)\)", neighbour)
+                    print(crossroad, "-", res.group(1), "cost", res.group(2))
+                    self.vertices[
+                        crossroad[0] + " - " + res.group(1)
+                    ] = res.group(2)
+                    self.nodes[crossroad[0]].connections.append(res.group(1))
+
+        else:
+            self.vertices = parse.connections(
+                data, self.nodes, delimiter, weight_delim
+            )
 
     def is_multi_component(self):
         paths = []

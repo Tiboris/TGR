@@ -65,6 +65,17 @@ class Transformer(Node):
         return f"<Transformer({self.nodeid})>"
 
 
+class Crossroad(Transformer):
+    def __init__(self, nodeid, has_bonus=False):
+        self.nodeid = nodeid
+        self.mark = False
+        self.has_bonus = has_bonus
+        self.connections = []
+
+    def __repr__(self):
+        return f"<Crossroad({self.nodeid}, bonus: {self.has_bonus})>"
+
+
 class Leaf:
     def __init__(self, key):
         self.key = key
