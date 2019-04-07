@@ -1,4 +1,4 @@
-#!/usr/python3
+#!/usr/bin/env python3
 class Node:
     def __init__(self, nodeid):
         self.nodeid = nodeid

@@ -1,4 +1,4 @@
-#!/usr/python3
+#!/usr/bin/env python3
 from graphs import Graph
 from nodes import Transformer
 

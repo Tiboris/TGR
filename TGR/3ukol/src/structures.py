@@ -1,4 +1,4 @@
-#!/usr/python3
+#!/usr/bin/env python3
 # Inspired from: https://stackabuse.com/stacks-and-queues-in-python/
 # A simple class stack that only allows pop and push operations
 

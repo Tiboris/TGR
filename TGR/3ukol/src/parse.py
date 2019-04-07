@@ -1,4 +1,4 @@
-#!/usr/python3
+#!/usr/bin/env python3
 def nodes(data):
     nodes = []
     for node in data[0].split(","):
