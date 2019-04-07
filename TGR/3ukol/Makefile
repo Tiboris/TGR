@@ -35,10 +35,9 @@ run:
 
 
 test:
-	./test.sh $(ukol2a)
-	./test.sh $(ukol2b)
-	./test.sh $(ukol2c)
-	./test.sh $(ukol2d)
+	./test.sh $(ukol3a)
+	./test.sh $(ukol3b)
+	./test.sh $(ukol3c)
 
 # zabalenie ulohy do archivu zip
 zip:
