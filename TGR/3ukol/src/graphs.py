@@ -2,6 +2,7 @@
 import re
 from collections import deque
 from collections import OrderedDict
+from copy import deepcopy
 
 import nodes
 import parse
@@ -181,6 +182,52 @@ class Graph:
 
         return paths
 
+    def has_loop(self):
+        # pre každý transformátor nájdem všetky možné cesty k ostatným
+        # ak má jeden transformátor viac ako jednu cestu k nejakému z topológie
+        # topológia má slučky a nastavím si loop_in_topo na True.
+
+        loop_in_topo = False
+        for start in self.nodes:
+            for end in self.nodes:
+                if end != start:
+                    paths = self.find_all_paths(start, end)
+                    if len(paths) > 1:
+                        loop_in_topo = True
+                        break
+            if loop_in_topo:
+                break
+
+        return loop_in_topo
+
+    def min_skeleton(self):
+        after_reset = deepcopy(self)  # copy object
+        after_reset.empty()  # empty it
+
+        weights, inverted = parse.invert_dict(self.vertices)
+
+        to_cover = set(self.nodes.keys())
+        covered = set()
+
+        while covered != to_cover:
+            for weight in weights:
+                for vertex in inverted[weight]:
+                    a, b = vertex.split(" - ")
+                    new = deepcopy(after_reset)
+
+                    # connect nodes in graph
+                    new.nodes[a].connect(b)
+                    new.nodes[b].connect(a)
+                    # add vertice to vertices
+                    new.vertices[vertex] = weight
+
+                    if not new.has_loop():
+                        after_reset = new
+                        covered.add(a)
+                        covered.add(b)
+
+        return after_reset
+
     def dijkstra(self, source, dest):
         inf = float("inf")
         distances = {node: inf for node in self.nodes}
@@ -251,24 +298,6 @@ class Network(Graph):
 
             for neighbour in first.connections:
                 stack.push(self.nodes[neighbour])
-
-    def has_loop(self):
-        # pre každý transformátor nájdem všetky možné cesty k ostatným
-        # ak má jeden transformátor viac ako jednu cestu k nejakému z topológie
-        # topológia má slučky a nastavím si loop_in_topo na True.
-
-        loop_in_topo = False
-        for start in self.nodes:
-            for end in self.nodes:
-                if end != start:
-                    paths = self.find_all_paths(start, end)
-                    if len(paths) > 1:
-                        loop_in_topo = True
-                        break
-            if loop_in_topo:
-                break
-
-        return loop_in_topo
 
 
 class AVLTree:
