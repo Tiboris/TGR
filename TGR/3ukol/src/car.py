@@ -9,13 +9,12 @@ def run(data):
     car = Graph(data, Transformer, " - ", ": ")
     endpoints = car.nodes.keys()
 
-    dic = {}
+    res = {}
     for endpoint in endpoints:
-        cost = len(car.find_shortest_path(start, endpoint))
-        # TODO ^^^ cost, path = djixtra(start, endpoint)
-        dic[endpoint] = 0 - cost
+        path, cost = car.dijkstra(start, endpoint)
+        res[endpoint] = 0 - cost
 
-    weights, inverted = invert_dict(dic)
+    weights, inverted = invert_dict(res)
     for weight in reversed(weights):
         for endpoint in sorted(inverted[weight]):
             print(f"{endpoint}: {weight}")

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import re
+from collections import deque
 from collections import OrderedDict
 
 import nodes
@@ -179,6 +180,40 @@ class Graph:
                     paths.append(newpath)
 
         return paths
+
+    def dijkstra(self, source, dest):
+        inf = float("inf")
+        distances = {node: inf for node in self.nodes}
+
+        previous_nodes = {node: None for node in self.nodes}
+        distances[source] = 0
+        nodes = self.nodes.copy()
+
+        while nodes:
+            current_node = min(nodes, key=lambda vertex: distances[vertex])
+
+            del nodes[current_node]
+            if distances[current_node] == inf:
+                break
+            for neighbour in self.nodes[current_node].connections:
+                try:
+                    cost = self.vertices[current_node + " - " + neighbour]
+                except KeyError:
+                    cost = self.vertices[neighbour + " - " + current_node]
+
+                alternative_route = distances[current_node] + cost
+                if alternative_route < distances[neighbour]:
+                    distances[neighbour] = alternative_route
+                    previous_nodes[neighbour] = current_node
+
+        path, current_node = deque(), dest
+        while previous_nodes[current_node] is not None:
+            path.appendleft(current_node)
+            current_node = previous_nodes[current_node]
+        if path:
+            path.appendleft(current_node)
+
+        return path, distances[dest]
 
 
 class Network(Graph):
