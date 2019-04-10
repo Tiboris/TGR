@@ -5,4 +5,26 @@ from nodes import Transformer
 
 def run(data):
     servers = Graph(data, Transformer, " - ", ": ")
-    servers.print_graph()
+    res = {}
+    out = ""
+
+    for node in servers.nodes:
+        if not out:
+            out = node
+        best = float("inf")
+        for neighbour in servers.nodes[node].neighbours():
+            if neighbour in res.keys():
+                continue
+
+            path, cost = servers.dijkstra(node, neighbour)
+            if cost < best:
+                best = cost
+                res[node] = path
+
+    total = 0
+    for key in res:
+        direction = res[key].pop()
+        total += servers.vertex_cost(key, direction)
+        out = out + " - " + direction
+
+    print(out + ": " + str(total))

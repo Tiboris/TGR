@@ -81,9 +81,9 @@ class Graph:
         return len(self.vertices)
 
     def vertex_cost(self, a, b):
-        for vertex, cost in self.vertices.values():
+        for vertex in self.vertices:
             if a in vertex and b in vertex:
-                return cost
+                return self.vertices[vertex]
 
         return 0  # returns 0 if given node names are not in graph
 
