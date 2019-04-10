@@ -22,9 +22,13 @@ def run(data):
                 res[node] = path
 
     total = 0
-    for key in res:
+    to_unpack = len(res)
+
+    while to_unpack:
+        key = out[-1]
         direction = res[key].pop()
         total += servers.vertex_cost(key, direction)
         out = out + " - " + direction
+        to_unpack -= 1
 
     print(out + ": " + str(total))
