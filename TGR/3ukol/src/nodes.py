@@ -62,7 +62,7 @@ class Transformer(Node):
         return self
 
     def __repr__(self):
-        return f"<Transformer({self.nodeid})>"
+        return "<Transformer({})>".format(self.nodeid)
 
 
 class Crossroad(Transformer):
@@ -73,7 +73,7 @@ class Crossroad(Transformer):
         self.connections = []
 
     def __repr__(self):
-        return f"<Crossroad({self.nodeid}, bonus: {self.has_bonus})>"
+        return "<Crossroad({}, bonus: {})>".format(self.nodeid, self.has_bonus)
 
 
 class Leaf:
@@ -84,4 +84,4 @@ class Leaf:
         self.level = None
 
     def __repr__(self):
-        return f"<Node({self.key})>"
+        return "<Node({})>".format(self.key)

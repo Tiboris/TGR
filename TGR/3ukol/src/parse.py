@@ -8,7 +8,7 @@ def nodes(data):
     return nodes
 
 
-def transformers(data, delimiter=" - ", weight_delim=": "):
+def transformers(data, delimiter=" - ", weight_delim=": ", oriented=False):
     nodes = []
     for line in data:
         conn, _ = line.split(weight_delim)
@@ -16,7 +16,7 @@ def transformers(data, delimiter=" - ", weight_delim=": "):
         if a not in nodes:
             nodes.append(a)
 
-        if b not in nodes:
+        if not oriented and b not in nodes:
             nodes.append(b)
 
     return nodes
@@ -76,7 +76,7 @@ def invert_dict(nodes):
             record = []
         inverted_dict[nodes[key]] = add_list_item(record, key)
 
-    return sorted(inverted_dict), inverted_dict
+    return inverted_dict
 
 
 def print_graph(dictionary):

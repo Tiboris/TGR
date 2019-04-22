@@ -14,7 +14,8 @@ def run(data):
         path, cost = car.dijkstra(start, endpoint)
         res[endpoint] = 0 - cost
 
-    weights, inverted = invert_dict(res)
+    inverted = invert_dict(res)
+    weights = sorted(inverted)
     for weight in reversed(weights):
         for endpoint in sorted(inverted[weight]):
-            print(f"{endpoint}: {weight}")
+            print("{}: {}".format(endpoint, weight))

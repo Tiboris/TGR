@@ -4,7 +4,7 @@ from nodes import Transformer
 
 
 def run(data):
-    servers = Graph(data, Transformer, " - ", ": ")
+    servers = Graph(data, Transformer, " - ", ": ", oriented=True)
     res = {}
     out = ""
 

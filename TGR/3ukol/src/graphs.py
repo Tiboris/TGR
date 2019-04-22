@@ -11,13 +11,14 @@ from structures import Stack
 
 
 class Graph:
-    def __init__(self, data, Instance, delimiter=",", weight_delim=""):
+    def __init__(self, data, Instance, delimiter=",",
+                 weight_delim="", oriented=False):
         self.delimiter = delimiter
         if Instance == nodes.Component:
             data = parse.nodes(data)
             input_nodes = parse.compound_elements(data)
         elif Instance == nodes.Transformer:
-            input_nodes = parse.transformers(data)
+            input_nodes = parse.transformers(data, oriented=oriented)
         elif Instance == nodes.Crossroad:
             input_nodes = parse.crossroads(data)
         else:
@@ -35,10 +36,10 @@ class Graph:
             for crossroad, neighbours in input_nodes.items():
                 for neighbour in neighbours:
                     res = re.search(r"(\w)\((-?\d+)\)", neighbour)
-                    print(crossroad, "-", res.group(1), "cost", res.group(2))
+                    # print(crossroad, "-", res.group(1), "cost", res.group(2))
                     self.vertices[
                         crossroad[0] + " - " + res.group(1)
-                    ] = res.group(2)
+                    ] = -int(res.group(2))
                     self.nodes[crossroad[0]].connections.append(res.group(1))
 
         else:
@@ -261,6 +262,37 @@ class Graph:
             path.appendleft(current_node)
 
         return path, distances[dest]
+
+    def bellman_ford(self, source):
+        distance = {}
+        predecessor = {}
+
+        for node in self.nodes:
+            distance[node] = float('inf')
+            predecessor[node] = None
+
+        distance[source] = 0
+
+        for x in range(len(self.nodes) - 1):
+            for node in self.nodes:
+                for neighbour in self.nodes[node].connections:
+                    if distance[neighbour] > distance[node] \
+                            + self.vertices[
+                            node + " - " + neighbour]:
+                        distance[neighbour] = \
+                            distance[node] + self.vertices[
+                                node + " - " + neighbour
+                            ]
+                        predecessor[neighbour] = node
+
+        for node in self.nodes:
+            for neighbour in self.nodes[node].connections:
+                assert distance[neighbour] \
+                    <= distance[node] + self.vertices[
+                        node + " - " + neighbour
+                    ], "Error: Negative weight cycle"
+
+        return distance, predecessor
 
 
 class Network(Graph):
