@@ -41,4 +41,4 @@ test:
 
 # zabalenie ulohy do archivu zip
 zip:
-	zip $(login) -r ./lib/ ./src/ ./report.pdf ./Makefile ./tests/
+	zip $(login) -r ./lib/ ./src/ ./report.pdf ./Makefile ./tests/ ./test.sh
