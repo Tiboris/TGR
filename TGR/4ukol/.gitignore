@@ -1,0 +1,5 @@
+evacuation
+groups
+parking
+*.zip
+/src/__pycache_*/*
