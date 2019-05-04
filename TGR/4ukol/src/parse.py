@@ -102,3 +102,26 @@ def sort_by_degree(nodes):
             sorted_nodes[node] = nodes[node]
 
     return sorted_nodes
+
+
+def rooms(data, Instance, delimiter=" > ", weight_delim=" ", door_delim=": "):
+    nodes = OrderedDict()
+    vertices = OrderedDict()
+    doors = OrderedDict()
+    conn_data = []
+    node_list = []
+    for line in data:
+        door, vertex_data = line.split(door_delim)
+        node_a, vertex_data = vertex_data.split(delimiter)
+        node_b, weight = vertex_data.split(weight_delim)
+        node_list.append(node_a)
+        node_list.append(node_b)
+        conn_data.append(node_a + delimiter + node_b + ":" + weight)
+        doors[door] = vertex_data[-1]
+
+    for node in node_list:
+        nodes[node] = Instance(node)
+
+    vertices = connections(conn_data, nodes, delimiter, ":")
+
+    return nodes, vertices, doors

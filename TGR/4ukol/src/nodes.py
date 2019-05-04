@@ -39,6 +39,12 @@ class Town(Person):
         return self.connections[0]
 
 
+class Room(Node):
+    def __init__(self, nodeid):
+        self.nodeid = self.room = nodeid
+        self.connections = []
+
+
 class Component(Node):  # DFS
     # H = 1  # Vodík s jednou vazbou
     # O = 2  # Kyslík se dvěma vazbami

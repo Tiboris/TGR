@@ -339,6 +339,15 @@ class Graph:
         return distance, predecessor
 
 
+class Flow(Graph):
+    def __init__(self, data, Instance=nodes.Room, delimiter=" > ",
+                 weight_delim=" ", exit_node="EXIT"):
+        self.source, self.source_capacity = data[0].split(": ")
+        data.remove(data[0])
+        self.nodes, self.vertices, self.doors = parse.rooms(data, Instance)
+        self.exit_node = self.nodes[exit_node]
+
+
 class Network(Graph):
     def unmark(self):
         for node in self.nodes:
