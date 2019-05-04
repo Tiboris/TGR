@@ -52,7 +52,6 @@ def hax_one_member_grp(nodes, groups):
 
 def run(data):
     people = Graph(data, Person, " - ")
-    # people.print_graph()
     groups = people.get_groups_a2()
 
     # hax groups
