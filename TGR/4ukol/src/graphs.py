@@ -145,26 +145,16 @@ class Graph:
             while tmp.vertex_cnt():  # covered != to_cover:
                 sorted_nodes = tmp.get_sort_by_degree()
                 degree = max(sorted_nodes, key=int)
-                tmp.print_graph()
 
                 to_remove = sorted_nodes[degree].pop()
                 tmp.remove_node(to_remove)
 
-                tmp.print_graph()
-
-            tmp.print_graph()
-
             res.append(list(tmp.nodes.keys()))
             covered = set(res[-1]).union(covered)
 
-            print("Covered :", covered)
-            print("To cover:", to_cover.difference(covered))
-            print("+++++++++++++++++++++++++")
             tmp = deepcopy(self)
             for node in covered:
                 tmp.remove_node(node)
-
-        tmp.print_graph()
 
         return res
 
