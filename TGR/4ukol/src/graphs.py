@@ -339,13 +339,93 @@ class Graph:
         return distance, predecessor
 
 
+class Vertex:
+
+    def __init__(self, vertexid, start, end, capacity):
+        self.vertexid = self.name = vertexid
+        self.start = start
+        self.end = end
+        self.capacity = capacity
+        self.flow = 0
+
+    def __repr__(self):
+        return "<Vertex(id: {})>\n C:\t{}\n F:\t{}\n---".format(
+            self.vertexid, self.capacity, self.flow
+        )
+
+
 class Flow(Graph):
     def __init__(self, data, Instance=nodes.Room, delimiter=" > ",
                  weight_delim=" ", exit_node="EXIT"):
+        self.delimiter = delimiter
         self.source, self.source_capacity = data[0].split(": ")
+        self.source_capacity = int(self.source_capacity)
         data.remove(data[0])
         self.nodes, self.vertices, self.doors = parse.rooms(data, Instance)
         self.exit_node = self.nodes[exit_node]
+        self.group_size = self.exit_capacity()
+        self.group_cnt = int(self.source_capacity/self.group_size)
+        tmp_vertices = deepcopy(self.vertices)
+        for vertex in tmp_vertices:
+            a, b = vertex.split(self.delimiter)
+            self.vertices[vertex] = Vertex(vertex, a, b, tmp_vertices[vertex])
+
+        self.source = self.nodes[self.source]
+
+    def exit_capacity(self):
+        exit_capacity = 0
+        for node in self.nodes:
+            if self.nodes[node].has_connection_with(self.exit_node.room):
+                exit_capacity += int(self.vertices[
+                    node + self.delimiter + self.exit_node.room
+                ])
+
+        return exit_capacity
+
+    def edmons_karp(self):
+        while self.has_backup_path():
+            minimum = float("inf")
+            node = self.exit_node
+
+            while node.pre is not None:
+                if node.pre_vertex.capacity - node.pre_vertex.flow < minimum:
+                    minimum = node.pre_vertex.capacity - node.pre_vertex.flow
+                node = node.pre
+
+            node = self.exit_node
+            while node.pre is not None:
+                node.pre_vertex.flow += minimum
+                node = node.pre
+
+    def has_backup_path(self):
+        for node in self.nodes:
+            self.nodes[node].dist = float("inf")
+            self.nodes[node].pre = None
+            self.nodes[node].pre_door = None
+
+        self.source.dist = 0
+        que = Queue()
+
+        que.enqueue(self.source)
+
+        while que.size():
+            first = que.dequeue()
+
+            if first == self.exit_node:
+                return True
+
+            for key in first.connections:
+                neighbour = self.nodes[key]
+                vertex = first.room + self.delimiter + key
+
+                if self.vertices[vertex].capacity - self.vertices[vertex].flow:
+                    if first.dist + 1 < neighbour.dist:
+                        neighbour.dist = first.dist + 1
+                        neighbour.pre = first
+                        neighbour.pre_vertex = self.vertices[vertex]
+                        que.enqueue(neighbour)
+
+        return False
 
 
 class Network(Graph):

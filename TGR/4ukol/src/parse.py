@@ -117,7 +117,7 @@ def rooms(data, Instance, delimiter=" > ", weight_delim=" ", door_delim=": "):
         node_list.append(node_a)
         node_list.append(node_b)
         conn_data.append(node_a + delimiter + node_b + ":" + weight)
-        doors[door] = vertex_data[-1]
+        doors[door] = node_a + delimiter + node_b
 
     for node in node_list:
         nodes[node] = Instance(node)

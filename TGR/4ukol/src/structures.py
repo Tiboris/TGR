@@ -37,9 +37,9 @@ class Queue:
         output = ""
         for record in self.queue:
             if output:
-                output = output + ", " + record
+                output = output + ", " + str(record)
             else:
-                output = "Queue:\n" + record
+                output = "Queue:\n" + str(record)
 
         print(output)
         print("--------------------")

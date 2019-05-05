@@ -43,6 +43,14 @@ class Room(Node):
     def __init__(self, nodeid):
         self.nodeid = self.room = nodeid
         self.connections = []
+        self.dist = float("inf")
+        self.pre = None
+        self.pre_door = None
+
+    def __repr__(self):
+        return "<Room({}):\n dist: {}\nconn:{}\n>".format(
+            self.room, str(self.dist), str(self.connections)
+        )
 
 
 class Component(Node):  # DFS
