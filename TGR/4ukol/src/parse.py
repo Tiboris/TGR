@@ -125,3 +125,14 @@ def rooms(data, Instance, delimiter=" > ", weight_delim=" ", door_delim=": "):
     vertices = connections(conn_data, nodes, delimiter, ":")
 
     return nodes, vertices, doors
+
+
+def places(data, Instance, delimiter, capacity_delim, coords_delim):
+    res = OrderedDict()
+    for line in data:
+        line, capacity = line.split(capacity_delim)
+        place, line = line.split(delimiter)
+        row, col = line.split(coords_delim)
+        res[place] = Instance(place, int(row), int(col), int(capacity))
+
+    return res

@@ -100,3 +100,18 @@ class Leaf:
 
     def __repr__(self):
         return "<Node({})>".format(self.key)
+
+
+class Place:
+    def __init__(self, name, row, col, capacity):
+        self.name = name
+        self.row = row  # - 1
+        self.col = col  # - 1
+        self.kind = self.name[0]
+        self.sn = self.name[1:]
+        self.capacity = capacity
+
+    def __repr__(self):
+        return "<Place({})>:\n X: {}\n Y: {}\n C:{}\n------".format(
+            self.name, self.row, self.col, self.capacity
+        )

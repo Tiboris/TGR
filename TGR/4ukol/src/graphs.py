@@ -616,3 +616,44 @@ class AVLTree:
 
         result = self.format_avl(tmp)
         print(result)
+
+
+class City:
+    def __init__(self, data, Instance=nodes.Place, delimiter=" ",
+                 capacity_delim=": ", coords_delim=","):
+        self.places = parse.places(
+            data, Instance, delimiter, capacity_delim, coords_delim
+        )
+        self.max_row = 0
+        self.max_col = 0
+        for p in self.places:
+            if self.places[p].row > self.max_row:
+                self.max_row = self.places[p].row
+
+            if self.places[p].col > self.max_col:
+                self.max_col = self.places[p].col
+
+        self.map = [
+            [[] for i in range(self.max_col)] for j in range(self.max_row)
+        ]
+        for p in self.places:
+            self.places[p].row
+            self.map[self.places[p].row - 1][self.places[p].col - 1].append(
+                self.places[p].name
+            )
+
+    def __repr__(self):
+        return "\n".join([
+            self.places[place].__repr__() for place in self.places
+        ])
+
+    def print_map(self):
+        print("City:")
+        try:
+            from pandas import DataFrame
+            print(DataFrame(self.map))
+        except ImportError:
+            for line in self.map:
+                print("\t|\t".join(
+                    str(set(l)) if l else "" for l in line)
+                )
