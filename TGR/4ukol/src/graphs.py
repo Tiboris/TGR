@@ -341,10 +341,8 @@ class Graph:
 
 class Vertex:
 
-    def __init__(self, vertexid, start, end, capacity):
+    def __init__(self, vertexid, capacity):
         self.vertexid = self.name = vertexid
-        self.start = start
-        self.end = end
         self.capacity = capacity
         self.flow = 0
 
@@ -367,8 +365,7 @@ class Flow(Graph):
         self.group_cnt = int(self.source_capacity/self.group_size)
         tmp_vertices = deepcopy(self.vertices)
         for vertex in tmp_vertices:
-            a, b = vertex.split(self.delimiter)
-            self.vertices[vertex] = Vertex(vertex, a, b, tmp_vertices[vertex])
+            self.vertices[vertex] = Vertex(vertex, tmp_vertices[vertex])
 
         self.source = self.nodes[self.source]
 
