@@ -15,3 +15,5 @@ def run(data):
         else:
             opt_flow = vertex.flow
         print(door + ":", opt_flow)
+
+    print("Time:", flow.max_exit_dist + flow.group_cnt)

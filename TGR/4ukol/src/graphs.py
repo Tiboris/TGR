@@ -368,6 +368,7 @@ class Flow(Graph):
             self.vertices[vertex] = Vertex(vertex, tmp_vertices[vertex])
 
         self.source = self.nodes[self.source]
+        self.max_exit_dist = 0
 
     def exit_capacity(self):
         exit_capacity = 0
@@ -409,6 +410,8 @@ class Flow(Graph):
             first = que.dequeue()
 
             if first == self.exit_node:
+                if self.max_exit_dist < first.dist:
+                    self.max_exit_dist = first.dist
                 return True
 
             for key in first.connections:
