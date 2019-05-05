@@ -33,12 +33,6 @@ run:
 	./$(ukol4b) < tests/$(ukol4b)_basic.in
 	./$(ukol4c) < tests/$(ukol4c)_basic.in
 
-
-test:
-	./test.sh $(ukol4a)
-	./test.sh $(ukol4b)
-	./test.sh $(ukol4c)
-
 # zabalenie ulohy do archivu zip
 zip:
 	zip $(login) -r ./lib/ ./src/ ./report.pdf ./Makefile ./test.sh ./tests/
