@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import itertools
 import re
 from collections import deque
 from collections import OrderedDict
@@ -636,16 +637,42 @@ class City:
         self.map = [
             [[] for i in range(self.max_col)] for j in range(self.max_row)
         ]
+        self.buildings = OrderedDict()
+        self.parking_places = OrderedDict()
+        self.all_people = []
+        self.all_places = []
+
         for p in self.places:
             self.places[p].row
             self.map[self.places[p].row - 1][self.places[p].col - 1].append(
                 self.places[p].name
             )
+            if self.places[p].kind == "B":
+                self.buildings[p] = self.places[p]
+            elif self.places[p].kind == "P":
+                self.parking_places[p] = self.places[p]
+            else:
+                print("Fatal Error: Call a priest!")
+                exit(1)
+        self.distance = self.get_distances()
+        self.combinations = self.get_combinations()
+        self.costs = self.add_cost_to_combinations()
 
     def __repr__(self):
         return "\n".join([
             self.places[place].__repr__() for place in self.places
         ])
+
+    def get_distances(self):
+        distances = {}
+        for b in self.buildings:
+            for p in self.parking_places:
+                distances[b + "-" + p] = int(
+                    abs(self.buildings[b].row - self.parking_places[p].row) +
+                    abs(self.buildings[b].col - self.parking_places[p].col)
+                )
+
+        return distances
 
     def print_map(self):
         print("City:")
@@ -657,3 +684,39 @@ class City:
                 print("\t|\t".join(
                     str(set(l)) if l else "" for l in line)
                 )
+
+    def get_combinations(self):
+        for b in self.buildings:
+            for person_id in range(1, self.buildings[b].capacity+1):
+                self.all_people.append(str(b + "_" + str(person_id)))
+
+        for p in self.parking_places:
+            for place_id in range(1, self.parking_places[p].capacity+1):
+                self.all_places.append(str(p + "_" + str(place_id)))
+
+        zips = [zip(x, self.all_places) for x in itertools.permutations(
+            self.all_people, len(self.all_places)
+        )]
+
+        res = [list(zipped) for zipped in zips]
+
+        return res
+
+    def add_cost_to_combinations(self):
+        CAR = 0
+        PLACE = 1
+        res = {}
+
+        for x in range(len(self.combinations)):
+            res[x] = 0
+
+            # print(combs[x], len(combs))
+            for mapping in self.combinations[x]:
+                res[x] += int(
+                    self.distance[mapping[CAR][:3] + "-" + mapping[PLACE][:3]]
+                )
+
+            # print(res[x])
+            # exit()
+
+        return res
