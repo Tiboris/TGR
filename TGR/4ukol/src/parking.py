@@ -5,7 +5,8 @@ from graphs import City
 def run(data):
     city = City(data)
     # print(city)
-    # city.print_map()
+    city.print_map()
+    print("-------\nOutput:")
     key_of_one_minimal = min(city.costs, key=city.costs.get)
     for mapping in city.combinations[key_of_one_minimal]:
         print(
