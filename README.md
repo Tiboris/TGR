@@ -1,2 +1,1 @@
-# mendelu
-Some school projects for https://www.pef.mendelu.cz
+Prečítajte si Pokyny\_k\_vypracovani\_ukolu.pdf
